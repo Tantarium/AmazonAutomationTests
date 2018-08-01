@@ -37,8 +37,14 @@ Feature: Shopping Cart Capabilities
     Then The selected item is successfully removed
       And The item no longer appears in my shopping cart
       And My shopping cart shows the updated number of items
+      #And The subtotal for my shopping cost successfully updates
 
-  #Scenario: Saving An Item For Later
-    #Given Something
-    #When Something Else
-    #Then Something More Else
+  Scenario: Saving An Item For Later
+    Given I am on the Amazon website
+      And I have items in my shopping cart
+      And I navigate to view my shopping cart
+    When I click to save a specific item for later
+    Then The selected item is successfully saved for later
+      And The selected item appears in the saved for later list
+      And My shopping cart shows the updated number of items
+      #And The subtotal for the shopping cart successfully updates

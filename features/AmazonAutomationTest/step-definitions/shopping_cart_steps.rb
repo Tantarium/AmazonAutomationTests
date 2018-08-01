@@ -150,3 +150,15 @@ And(/^My shopping cart shows an updated count of items due to the quantity chang
   updated_cart_count = @browser.span(id: 'nav-cart-count').text
   expect(updated_cart_count).to eq(@selected_value)
 end
+
+When(/^I click to save a specific item for later$/) do
+  pending
+end
+
+Then(/^The selected item is successfully saved for later$/) do
+  pending
+end
+
+And(/^The selected item appears in the saved for later list$/) do
+  pending
+end
