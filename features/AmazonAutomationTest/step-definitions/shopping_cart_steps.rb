@@ -117,6 +117,7 @@ And(/^The number of items in my shopping cart is zero$/) do
 end
 
 When(/^I click to delete a specific item from my shopping cart$/) do
+  @subtotal_before_delete = @browser.form(id: 'gutterCartViewForm').text.split("$")[1].split("\n")[0]
   @list_text_multiple_del = @browser.div(class: 'sc-list-body').text
   @items_in_cart_before_deletion = @browser.span(id: 'nav-cart-count').text
   @browser.div('data-asin': @isbn_10).input(value: 'Delete').click
@@ -143,6 +144,11 @@ And(/^My shopping cart shows the updated number of items after deleting$/) do
   expect(items_after_deletion.to_i).to eq(@items_in_cart_before_deletion.to_i - 1)
 end
 
+And(/^The subtotal for my shopping cost successfully updates after deleting$/) do
+  subtotal_after_delete = @browser.form(id: 'gutterCartViewForm').text.split("$")[1].split("\n")[0]
+  expect(@subtotal_before_delete.to_f).to be > subtotal_after_delete.to_f
+end
+
 And(/^My shopping cart shows an updated count of items due to the quantity change$/) do
   while @cart_count_before_qty_change == @browser.span(id: 'nav-cart-count').text do
     sleep(1)
@@ -152,6 +158,7 @@ And(/^My shopping cart shows an updated count of items due to the quantity chang
 end
 
 When(/^I click to save a specific item for later$/) do
+  @subtotal_before_saving = @browser.form(id: 'gutterCartViewForm').text.split("$")[1].split("\n")[0]
   @list_text_multiple_save = @browser.div(class: 'sc-list-body').text
   @items_in_cart_before_save = @browser.span(id: 'nav-cart-count').text
   @browser.div('data-asin': @isbn_10).input(value: 'Save for later').click
@@ -175,4 +182,9 @@ end
 And(/^My shopping cart shows the updated number of items after saving$/) do
   items_after_saving = @browser.span(id: 'nav-cart-count').text
   expect(items_after_saving.to_i).to eq(@items_in_cart_before_save.to_i - 1)
+end
+
+And(/^The subtotal for the shopping cart successfully updates after saving$/) do
+  subtotal_after_saving = @browser.form(id: 'gutterCartViewForm').text.split("$")[1].split("\n")[0]
+  expect(@subtotal_before_saving.to_f).to be > subtotal_after_saving.to_f
 end

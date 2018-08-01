@@ -37,7 +37,7 @@ Feature: Shopping Cart Capabilities
     Then The selected item is successfully removed
       And The item no longer appears in my shopping cart
       And My shopping cart shows the updated number of items after deleting
-      #And The subtotal for my shopping cost successfully updates
+      And The subtotal for my shopping cost successfully updates after deleting
 
   Scenario: Saving An Item For Later
     Given I am on the Amazon website
@@ -47,4 +47,4 @@ Feature: Shopping Cart Capabilities
     Then The selected item is successfully saved for later
       And The selected item appears in the saved for later list
       And My shopping cart shows the updated number of items after saving
-      #And The subtotal for the shopping cart successfully updates
+      And The subtotal for the shopping cart successfully updates after saving
