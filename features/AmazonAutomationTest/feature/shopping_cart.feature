@@ -36,7 +36,7 @@ Feature: Shopping Cart Capabilities
     When I click to delete a specific item from my shopping cart
     Then The selected item is successfully removed
       And The item no longer appears in my shopping cart
-      And My shopping cart shows the updated number of items
+      And My shopping cart shows the updated number of items after deleting
       #And The subtotal for my shopping cost successfully updates
 
   Scenario: Saving An Item For Later
@@ -46,5 +46,5 @@ Feature: Shopping Cart Capabilities
     When I click to save a specific item for later
     Then The selected item is successfully saved for later
       And The selected item appears in the saved for later list
-      And My shopping cart shows the updated number of items
+      And My shopping cart shows the updated number of items after saving
       #And The subtotal for the shopping cart successfully updates

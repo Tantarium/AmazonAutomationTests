@@ -117,13 +117,13 @@ And(/^The number of items in my shopping cart is zero$/) do
 end
 
 When(/^I click to delete a specific item from my shopping cart$/) do
-  @list_text_multiple = @browser.div(class: 'sc-list-body').text
+  @list_text_multiple_del = @browser.div(class: 'sc-list-body').text
   @items_in_cart_before_deletion = @browser.span(id: 'nav-cart-count').text
   @browser.div('data-asin': @isbn_10).input(value: 'Delete').click
 end
 
 Then(/^The selected item is successfully removed$/) do
-  while @list_text_multiple == @browser.div(class: 'sc-list-body').text do
+  while @list_text_multiple_del == @browser.div(class: 'sc-list-body').text do
     sleep(1)
   end
   expected_text_removal_portion = ' was removed from Shopping Cart.'
@@ -138,7 +138,7 @@ And(/^The item no longer appears in my shopping cart$/) do
   expect(updated_list).to_not include(@product_title_5)
 end
 
-And(/^My shopping cart shows the updated number of items$/) do
+And(/^My shopping cart shows the updated number of items after deleting$/) do
   items_after_deletion = @browser.span(id: 'nav-cart-count').text
   expect(items_after_deletion.to_i).to eq(@items_in_cart_before_deletion.to_i - 1)
 end
@@ -152,13 +152,27 @@ And(/^My shopping cart shows an updated count of items due to the quantity chang
 end
 
 When(/^I click to save a specific item for later$/) do
-  pending
+  @list_text_multiple_save = @browser.div(class: 'sc-list-body').text
+  @items_in_cart_before_save = @browser.span(id: 'nav-cart-count').text
+  @browser.div('data-asin': @isbn_10).input(value: 'Save for later').click
 end
 
 Then(/^The selected item is successfully saved for later$/) do
-  pending
+  while @list_text_multiple_save == @browser.div(class: 'sc-list-body').text do
+    sleep(1)
+  end
+  expected_text_save_portion = ' has been moved to Save for Later.'
+  updated_list_text = @browser.div(class: 'sc-list-body').text
+  expected_text = @product_title_5 + expected_text_save_portion
+  expect(updated_list_text).to include(expected_text)
 end
 
 And(/^The selected item appears in the saved for later list$/) do
-  pending
+  save_list_text = @browser.form(id: 'savedCartViewForm').text
+  expect(save_list_text).to include(@product_title_5)
+end
+
+And(/^My shopping cart shows the updated number of items after saving$/) do
+  items_after_saving = @browser.span(id: 'nav-cart-count').text
+  expect(items_after_saving.to_i).to eq(@items_in_cart_before_save.to_i - 1)
 end
